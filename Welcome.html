@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coca-Cola | Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/logo-4.png" type="image/x-icon" />
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-dark: #121212;
+            --coke-red: #E60000;
+            --text-light: #F0F0F0;
+            --text-dim: #A0A0A0;
+            --transition-speed: 0.3s;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--coke-red);
+            transition: width 0.3s ease;
+        }
+
+        /* Global reset and box-sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            opacity: 0;
+            transition: opacity 1s;
+            position: relative;
+            z-index: 1;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* Video Background */
+        #video-background {
+            position: fixed;
+            top: 0; left: 0;
+            min-width: 100%; min-height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.7);
+        }
+
+        /* Welcome Content */
+        .welcome-container {
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-container h1 {
+            font-family: 'Monocraft', sans-serif;
+            font-size: 100px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 10px;
+            color: var(--coke-red);
+            text-transform: uppercase;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px black, 0 0 20px whitesmoke;
+            }
+            to {
+                text-shadow: 0 0 20px whitesmoke, 0 0 30px rgb(0, 0, 0);
+            }
+        }
+
+        .welcome-container p {
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: whitesmoke;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .enter-btn {
+            display: inline-block;
+            background-color: #d80000dc;
+            color: #ffffff;
+            border-radius: 50px;
+            text-decoration: none;
+            padding: 15px 40px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: none;
+            font-size: 1em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .enter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .enter-btn:hover {
+            background-color: var(--coke-red);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(230, 0, 0, 0.6);
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            border: 2px solid white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            transition: transform 0.15s ease-out;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: exclusion;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.637);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #custom-cursor.grow {
+            transform: translate(-50%, -50%) scale(1.5);
+            border-color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 850px) {
+            body {
+                cursor: default !important;
+            }
+
+            .welcome-container h1 {
+                font-size: 3em;
+            }
+
+            .welcome-container p {
+                font-size: 1em;
+            }
+
+            #custom-cursor {
+                display: none !important;
+            }
+
+            .enter-btn {
+                cursor: pointer;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-screen">
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <video autoplay loop muted playsinline id="video-background" preload="auto">
+        <source src="assets/About.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="welcome-container">
+        <h1>Taste the Feeling</h1>
+        <p>Explore the different flavors of Coca-Cola!</p>
+        <a href="home.html" class="enter-btn" id="enter-site-btn">ENTER THE SITE</a>
+    </div>
+
+    <div id="custom-cursor"></div>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            const loadingScreen = document.querySelector('.loading-screen');
+            const loadingProgress = document.querySelector('.loading-progress');
+            let progress = 0;
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 100) progress = 100;
+                loadingProgress.style.width = `${progress}%`;
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        document.body.classList.add('loaded');
+                    }, 500);
+                }
+            }, 200);
+        });
+
+        // Custom Cursor with Trail Effect
+        const initCustomCursor = () => {
+            const cursor = document.getElementById('custom-cursor');
+            const trails = [];
+            const trailCount = 5;
+
+            // Create trail elements
+            for (let i = 0; i < trailCount; i++) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                document.body.appendChild(trail);
+                trails.push(trail);
+            }
+
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 850) return;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animate() {
+                cursorX += (mouseX - cursorX) * 0.1;
+                cursorY += (mouseY - cursorY) * 0.1;
+
+                cursor.style.left = `${cursorX}px`;
+                cursor.style.top = `${cursorY}px`;
+
+                trails.forEach((trail, index) => {
+                    const delay = (index + 1) * 0.05;
+                    trail.style.left = `${cursorX - (mouseX - cursorX) * delay}px`;
+                    trail.style.top = `${cursorY - (mouseY - cursorY) * delay}px`;
+                    trail.style.opacity = 1 - (index / trailCount);
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            const interactiveElements = document.querySelectorAll('.enter-btn, .social-links a');
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    if (window.innerWidth > 850) cursor.classList.add('grow');
+                });
+                el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+            });
+        };
+
+        // SoundManager Class
+        class SoundManager {
+            constructor() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.buffers = {};
+                    this.masterGainNode = this.audioContext.createGain();
+                    this.masterGainNode.connect(this.audioContext.destination);
+                    this.musicStarted = false;
+                } catch (e) {
+                    console.warn('Web Audio API is not supported in this browser.');
+                    this.audioContext = null;
+                }
+            }
+
+            async loadSound(name, url) {
+                if (!this.audioContext) return;
+                try {
+                    const response = await fetch(url);
+                    const arrayBuffer = await response.arrayBuffer();
+                    this.buffers[name] = await this.audioContext.decodeAudioData(arrayBuffer);
+                } catch (error) {
+                    console.error(`Error loading or decoding sound ${name}:`, error);
+                }
+            }
+
+            playBackgroundMusic(name) {
+                if (!this.audioContext || !this.buffers[name] || this.musicStarted) return;
+
+                const musicGainNode = this.audioContext.createGain();
+                musicGainNode.gain.value = 0.2;
+                musicGainNode.connect(this.masterGainNode);
+
+                const source = this.audioContext.createBufferSource();
+                source.buffer = this.buffers[name];
+                source.loop = true;
+
+                source.connect(musicGainNode);
+                source.start(0);
+
+                this.musicStarted = true;
+                console.log("Background music started.");
+            }
+        }
+
+        const soundManager = new SoundManager();
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load the background music asset
+            const soundMusic = soundManager.loadSound('background_track', 'assets/background.mp3');
+
+            await Promise.all([soundMusic]);
+
+            // Function to handle initial music start
+            const startMusicOnInteraction = () => {
+                if (soundManager.audioContext) {
+                    if (soundManager.audioContext.state === 'suspended') {
+                        soundManager.audioContext.resume().then(() => {
+                            soundManager.playBackgroundMusic('background_track');
+                        });
+                    } else if (!soundManager.musicStarted) {
+                        soundManager.playBackgroundMusic('background_track');
+                    }
+                }
+            };
+
+            // Attach listeners to start music on user interaction
+            document.addEventListener('click', startMusicOnInteraction, { once: true });
+            document.addEventListener('keydown', startMusicOnInteraction, { once: true });
+            document.getElementById('enter-site-btn').addEventListener('click', startMusicOnInteraction, { once: true });
+
+            // Initialize Custom Cursor
+            initCustomCursor();
+        });
+    </script>
+
+    <!-- Font Awesome for social media icons -->
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coca-Cola | The Experience</title>
+    <link rel="icon" href="assets/logo-4.png" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="loader-screen">
+        <div class="bottle-container">
+            <svg class="bottle-svg" viewBox="0 0 100 300">
+                <defs>
+                    <clipPath id="bottle-clip">
+                        <path
+                            d="M35,10 L65,10 Q70,10 70,20 L70,50 Q70,70 85,100 L85,250 Q85,290 50,290 Q15,290 15,250 L15,100 Q30,70 30,50 L30,20 Q30,10 35,10 Z" />
+                    </clipPath>
+                </defs>
+
+                <rect width="100" height="300" fill="rgba(255,255,255,0.05)" clip-path="url(#bottle-clip)" />
+
+                <g clip-path="url(#bottle-clip)">
+                    <rect id="liquid-fill" x="0" y="300" width="100" height="300" fill="#F40009" />
+
+                    <path id="wave" d="M0,300 Q25,290 50,300 T100,300 L100,310 L0,310 Z" fill="#F40009">
+                        <animateTransform attributeName="transform" type="translate" from="-50 0" to="0 0" dur="1.5s"
+                            repeatCount="indefinite" />
+                    </path>
+                </g>
+            </svg>
+            <div class="fizz-container" id="fizz"></div>
+        </div>
+        <div class="loading-text">Refreshing... <span id="percent">0</span>%</div>
+    </div>
+
+    <div id="custom-cursor"></div>
+    <div id="transition-overlay"></div>
+
+    <nav class="navbar">
+        <img src="assets/logo-4.png" alt="Coca-Cola Logo" class="logo-img">
+        <div class="nav-links">
+            <a href="#welcome-section" class="active">WELCOME</a>
+            <a href="#product-section">PRODUCTS</a>
+            <a href="#about-section">ABOUT</a>
+            <a href="#contact-section">CONTACT</a>
+        </div>
+    </nav>
+
+    <section id="welcome-section" class="main-section">
+        <video autoplay mutedloop playsinline id="welcome-video">
+            <source src="assets/Welcome.mp4" type="video/mp4">
+        </video>
+        <div class="welcome-content">
+            <h1 id="site-title" class="animated-element fade-in-up">The Refreshing Experience</h1>
+            <p class="animated-element fade-in-up" style="transition-delay: 0.2s;">Discover the taste of the world's
+                favorite drink.</p>
+            <a href="#product-section" class="enter-btn animated-element fade-in-up" style="transition-delay: 0.4s;"
+                id="start-experience-btn">Start Experience</a>
+        </div>
+    </section>
+
+    <section id="product-section" class="main-section">
+        <video autoplay muted loop playsinline id="product-video-bg">
+            <source src="assets/Product.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content" id="product-hero-content">
+            <div class="hero-text text-active" id="slideshow-text-content">
+                <span style="font-size: 0.9em; letter-spacing: 2px; font-weight: 600;" id="product-tag">THE
+                    ORIGINAL</span>
+                <h1 class="headline" id="headline">ORIGINAL TASTE</h1>
+                <p id="description" style="margin-bottom: 20px; line-height: 1.6;">The world's most popular soft drink.
+                </p>
+                <a href="#" class="enter-btn" id="drink-now-btn"
+                    style="background: transparent; border: 1px solid white;">View Facts</a>
+            </div>
+            <button id="toggle-view-btn" class="enter-btn">View All Products</button>
+        </div>
+
+        <div class="hero-section-scroll" id="hero-scroll-container">
+            <div class="carousel-inner" id="carousel-inner">
+            </div>
+        </div>
+
+        <div class="left-pagination">
+            <span id="current-slide">01</span> / <span id="total-slides">14</span>
+        </div>
+        <div class="nav-arrows">
+            <button class="arrow-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="arrow-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section id="about-section" class="main-section">
+        <div class="about-container">
+            <div class="about-text">
+                <h2 class="animated-element fade-in-up">Global Icon & Purpose</h2>
+                <p class="animated-element fade-in-up" style="transition-delay: 0.2s;">Founded in 1886 by Dr. John S. Pemberton in Atlanta, Georgia. Now operating in 200+ countries with a mission to refresh the world.</p>
+
+                <h3 class="animated-element fade-in-up" style="transition-delay: 0.4s;">Key Facts</h3>
+                <p class="animated-element fade-in-up" style="transition-delay: 0.6s;">• World's most recognized beverage brand<br>
+                • Symbol of shared moments and optimism<br>
+                • Leader in sustainable packaging initiatives</p>
+            </div>
+            <div class="about-stats animated-element fade-in-up" style="transition-delay: 1.2s;">
+                <div class="stat-box">
+                    <span class="stat-number">135+</span>
+                    <span class="stat-label">Years of Heritage</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">400+</span>
+                    <span class="stat-label">Brands</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">1.9B</span>
+                    <span class="stat-label">Daily Servings</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-section">
+        <div class="text-content welcome-content">
+            <h1 class="animated-element fade-in-up" style="text-align: center;">
+                <span id="typing-text"></span>
+            </h1>
+        </div>
+    </section>
+
+    <section id="contact-section" class="main-section">
+        <video autoplay muted loop playsinline id="product-video-bg">
+            <source src="assets/Contact.mp4" type="video/mp4">
+        </video>
+        <div class="contact-container">
+            <h2 class="animated-element fade-in-up">Connect With Us</h2>
+            <p class="animated-element fade-in-up" style="transition-delay: 0.1s;">Find the latest news, updates, and
+                more on our social media platforms.</p>
+
+            <div class="social-accounts-grid">
+                <div class="social-block animated-element fade-in-up" style="transition-delay: 0.3s;">
+                    <h3><i class="fab fa-facebook-f"></i> Facebook</h3>
+                    <p><a href="https://web.facebook.com/CocaColaPhilippines/?_rdc=1&_rdr#" target="_blank"
+                            style="color: var(--text-dim);">@Coca-Cola</a></p>
+                </div>
+                <div class="social-block animated-element fade-in-up" style="transition-delay: 0.4s;">
+                    <h3><i class="fab fa-twitter"></i> X (Twitter)</h3>
+                    <p><a href="https://x.com/CocaColaPH" target="_blank"
+                            style="color: var(--text-dim);">@CocaColaPH</a></p>
+                </div>
+                <div class="social-block animated-element fade-in-up" style="transition-delay: 0.5s;">
+                    <h3><i class="fab fa-instagram"></i> Instagram</h3>
+                    <p><a href="https://www.instagram.com/cocacolaph/" target="_blank"
+                            style="color: var(--text-dim);">@cocacolaph</a></p>
+                </div>
+                <div class="social-block animated-element fade-in-up" style="transition-delay: 0.6s;">
+                    <h3><i class="fab fa-youtube"></i> YouTube</h3>
+                    <p><a href="https://www.youtube.com/@CocaColaPhilippinesOfficial" target="_blank"
+                            style="color: var(--text-dim);">Coca-Cola Philippines</a></p>
+                </div>
+                <div class="social-block animated-element fade-in-up" style="transition-delay: 0.6s;">
+                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                    <p><a href="mailto:phicommunications@coca-cola.com" target="_blank"
+                            style="color: var(--text-dim);">phicommunications@coca-cola.com</a></p>
+                </div>
+                <div class="social-block animated-element fade-in-up" style="transition-delay: 0.7s;">
+                    <h3><i class="fas fa-map-marker-alt"></i> Corporate HQ</h3>
+                    <p>Atlanta, Georgia, USA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div id="product-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-headline"
+        aria-describedby="modal-description" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <img id="modal-image" src="" alt="">
+                <div>
+                    <span style="font-size: 0.8em; letter-spacing: 2px; font-weight: 600;" id="modal-tag"></span>
+                    <h2 id="modal-headline" style="color: var(--coke-red);">PRODUCT NAME</h2>
+                </div>
+            </div>
+            <p id="modal-description" style="margin-bottom: 20px; line-height: 1.6; color: var(--text-light);"></p>
+            <h3 style="color: white; margin-bottom: 15px;">Nutrition Facts (Per 12 fl oz)</h3>
+            <ul id="modal-ingredients-list" class="modal-ingredients">
+            </ul>
+            <button id="final-drink-now-btn" class="enter-btn"
+                style="margin-top: 25px; width: 100%; text-align: center;">Enjoy A Coca-Cola</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
